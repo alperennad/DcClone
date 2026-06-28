@@ -1,0 +1,71 @@
+.user-list {
+  margin-bottom: 24px;
+}
+
+.user-list h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.user-list ul {
+  list-style: none;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.user-item:hover {
+  background: var(--hover-bg);
+}
+
+.user-status {
+  position: relative;
+}
+
+.user-status::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-secondary);
+}
+
+.user-status.online::after {
+  background: var(--online-color);
+}
+
+.user-status.offline::after {
+  background: var(--offline-color);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.user-name {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 500;
+}

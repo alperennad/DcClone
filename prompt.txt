@@ -1,0 +1,82 @@
+You are a senior full-stack software architect and engineer.
+
+I want you to build a minimal but production-ready “Discord-like” real-time communication web application for 10–15 concurrent users.
+
+Tech Stack Requirements:
+
+* Backend: Python + FastAPI
+* Real-time communication: WebSocket
+* Voice communication: WebRTC (browser-based, Python only for signaling)
+* Frontend: React (Vite)
+* Database: PostgreSQL
+* Authentication: JWT-based auth
+* Deployment-ready with Docker
+* Reverse proxy ready (Nginx)
+* HTTPS compatible
+
+Project Goal:
+Create a private small-scale communication platform where users can:
+
+1. Register and login
+2. Create and join text channels
+3. Send and receive real-time messages
+4. See online users
+5. Join a voice channel and talk with other users using WebRTC
+6. Leave voice channel cleanly
+7. Handle up to 15 concurrent users
+
+Architecture Requirements:
+
+* Clean folder structure
+* Separation of concerns (routers, services, models)
+* Async everywhere possible
+* Proper error handling
+* Logging
+* Environment variable config
+* Dockerfile + docker-compose
+* Database migrations (Alembic)
+
+Voice Chat Requirements:
+
+* Use WebRTC for audio only (no video)
+* Python backend acts only as signaling server
+* Use STUN server configuration
+* Support group voice channel (basic mesh is acceptable)
+* Proper connection cleanup on disconnect
+
+Security Requirements:
+
+* Password hashing (bcrypt)
+* JWT access tokens
+* Auth-protected WebSocket
+* Basic rate limiting for messages
+
+Frontend Requirements:
+
+* Clean modern UI
+* Channel list sidebar
+* Chat panel
+* Online user indicator
+* Voice channel join/leave button
+* Display who is speaking (basic detection if possible)
+
+Development Instructions:
+
+1. First generate full project folder structure.
+2. Then implement backend step by step.
+3. Then frontend step by step.
+4. Then WebRTC signaling logic.
+5. Then Docker setup.
+6. Explain how to run locally.
+7. Explain how to deploy on a VDS.
+
+Important:
+
+* Do NOT skip implementation details.
+* Write complete working code files.
+* Do not summarize.
+* Build incrementally and wait for confirmation before moving to the next major phase.
+* If something is complex, explain briefly but still implement it.
+
+Assume intermediate developer level.
+Code must be clean, structured, and understandable.

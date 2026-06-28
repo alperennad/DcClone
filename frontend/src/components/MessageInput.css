@@ -1,0 +1,56 @@
+.message-input-container {
+  padding: 0 16px 24px;
+}
+
+.message-input-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.message-input-wrapper textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.375;
+  resize: none;
+  min-height: 22px;
+  max-height: 200px;
+}
+
+.message-input-wrapper textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.send-button {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-accent);
+  border-radius: 50%;
+  color: white;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.send-button:hover:not(:disabled) {
+  background: #4752c4;
+}
+
+.send-button:disabled {
+  background: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.send-button svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 2px;
+}
