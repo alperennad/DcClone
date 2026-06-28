@@ -7,31 +7,42 @@ services:
       - "7881:7881"
       - "50000-50100:50000-50100/udp"
 
+  web:
+    image: caddy:2-alpine
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - next
+      - livekit
+
   server:
     build:
       context: .
       dockerfile: server/Dockerfile
     environment:
-      LIVEKIT_URL: ws://livekit:7880
-      LIVEKIT_API_KEY: devkey
-      LIVEKIT_API_SECRET: secret
-      WEB_ORIGIN: http://localhost:3000
+      LIVEKIT_URL: ${LIVEKIT_URL:-ws://livekit:7880}
+      LIVEKIT_API_KEY: ${LIVEKIT_API_KEY:-devkey}
+      LIVEKIT_API_SECRET: ${LIVEKIT_API_SECRET:-secret}
+      WEB_ORIGIN: ${WEB_ORIGIN:-https://dclone.ddantalyasigorta.com}
       PORT: 4000
     ports:
       - "4000:4000"
     depends_on:
       - livekit
 
-  web:
+  next:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
-        NEXT_PUBLIC_LIVEKIT_URL: ws://localhost:7880
+        NEXT_PUBLIC_LIVEKIT_URL: ${NEXT_PUBLIC_LIVEKIT_URL:-wss://dclone.ddantalyasigorta.com}
     environment:
-      NEXT_PUBLIC_LIVEKIT_URL: ws://localhost:7880
-      BACKEND_URL: http://server:4000
-    ports:
-      - "3000:3000"
+      LIVEKIT_PUBLIC_URL: ${LIVEKIT_PUBLIC_URL:-wss://dclone.ddantalyasigorta.com}
+      NEXT_PUBLIC_LIVEKIT_URL: ${NEXT_PUBLIC_LIVEKIT_URL:-wss://dclone.ddantalyasigorta.com}
+      BACKEND_URL: ${BACKEND_URL:-http://server:4000}
+    expose:
+      - "3000"
     depends_on:
       - server

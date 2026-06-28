@@ -25,8 +25,6 @@ type VoiceRoomProps = {
   onLeave: () => void;
 };
 
-const livekitUrl = process.env.NEXT_PUBLIC_LIVEKIT_URL ?? "ws://localhost:7880";
-
 export function VoiceRoom({ name, onLeave }: VoiceRoomProps) {
   const roomRef = useRef<Room | null>(null);
   const [participants, setParticipants] = useState<ParticipantView[]>([]);
@@ -88,14 +86,22 @@ export function VoiceRoom({ name, onLeave }: VoiceRoomProps) {
     async function connect() {
       try {
         setError(null);
-        const response = await fetch(`/api/token?name=${encodeURIComponent(name)}`);
-        const payload = (await response.json()) as { token?: string; error?: string };
+        const [tokenResponse, configResponse] = await Promise.all([
+          fetch(`/api/token?name=${encodeURIComponent(name)}`),
+          fetch("/api/config")
+        ]);
+        const payload = (await tokenResponse.json()) as { token?: string; error?: string };
+        const runtimeConfig = (await configResponse.json()) as { livekitUrl?: string };
 
-        if (!response.ok || !payload.token) {
+        if (!tokenResponse.ok || !payload.token) {
           throw new Error(payload.error ?? "Could not join room.");
         }
 
-        await room.connect(livekitUrl, payload.token, { autoSubscribe: true });
+        if (!runtimeConfig.livekitUrl) {
+          throw new Error("LiveKit URL is not configured.");
+        }
+
+        await room.connect(runtimeConfig.livekitUrl, payload.token, { autoSubscribe: true });
         await room.localParticipant.setMicrophoneEnabled(true);
 
         if (!cancelled) {

@@ -49,11 +49,37 @@ cp .env.example .env
 For local Docker development, the defaults are:
 
 ```env
-LIVEKIT_URL=ws://localhost:7880
+LIVEKIT_URL=ws://livekit:7880
+LIVEKIT_PUBLIC_URL=ws://localhost:3000
 LIVEKIT_API_KEY=devkey
 LIVEKIT_API_SECRET=secret
-NEXT_PUBLIC_LIVEKIT_URL=ws://localhost:7880
-BACKEND_URL=http://localhost:4000
+NEXT_PUBLIC_LIVEKIT_URL=ws://localhost:3000
+BACKEND_URL=http://server:4000
+WEB_ORIGIN=http://localhost:3000
+```
+
+`LIVEKIT_URL` is used by the server container. `LIVEKIT_PUBLIC_URL` is used by the browser.
+
+For a live HTTPS deployment, `LIVEKIT_PUBLIC_URL` must be a public secure websocket URL, for example:
+
+```env
+LIVEKIT_PUBLIC_URL=wss://livekit.your-domain.com
+WEB_ORIGIN=https://your-app-domain.com
+```
+
+Do not use `ws://localhost:7880` in production. In a browser, `localhost` means the visitor's own machine, not your server.
+
+For the included `docker-compose.yml`, the public `web` service proxies:
+
+- `/` to the Next.js app
+- `/rtc` to LiveKit signal websocket
+
+For `https://dclone.ddantalyasigorta.com/`, set:
+
+```env
+LIVEKIT_PUBLIC_URL=wss://dclone.ddantalyasigorta.com
+NEXT_PUBLIC_LIVEKIT_URL=wss://dclone.ddantalyasigorta.com
+WEB_ORIGIN=https://dclone.ddantalyasigorta.com
 ```
 
 ## Local Development

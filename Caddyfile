@@ -1,0 +1,8 @@
+:3000 {
+  encode zstd gzip
+
+  @livekit path /rtc*
+  reverse_proxy @livekit livekit:7880
+
+  reverse_proxy next:3000
+}
