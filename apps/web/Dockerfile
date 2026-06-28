@@ -10,7 +10,6 @@ ARG NEXT_PUBLIC_LIVEKIT_URL=ws://localhost:7880
 ENV NEXT_PUBLIC_LIVEKIT_URL=$NEXT_PUBLIC_LIVEKIT_URL
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
 COPY package*.json ./
 COPY apps/web ./apps/web
 WORKDIR /app/apps/web
